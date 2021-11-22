@@ -1,0 +1,17 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Liste Genre
+{% endblock %}
+
+{% block body %}
+	<h1 class="border border-dark rounded p-2 m-2 text-white bg-primary">
+		{% block monTitre %}
+			Genres
+		{% endblock %}
+	</h1>
+	<center>
+		{% for genre in genres %}
+			<h3>{{ genre.nom }}</h3><br><hr>
+		{% endfor %}
+	</center>
+{% endblock %}

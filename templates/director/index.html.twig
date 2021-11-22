@@ -1,0 +1,19 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Liste des Directeurs
+{% endblock %}
+
+{% block body %}
+	<h1 class="border border-dark rounded p-2 m-2 text-white bg-primary">
+		{% block monTitre %}
+			Directeurs
+		{% endblock %}
+	</h1>
+	<center>
+		{% for director in directors %}
+			<img style="width:45px;" src="{{ asset(director.image) }}"><br>
+			<h3>{{ director.prenom }}
+				{{ director.nom }}</h3><br><hr>
+		{% endfor %}
+	</center>
+{% endblock %}
