@@ -15,7 +15,7 @@ class DirectorController extends AbstractController
      */
     public function index(DirectorRepository $repository): Response
     {
-        $repository = $this->getDoctrine()->getRepository(Director::class);
+        // $repository = $this->getDoctrine()->getRepository(Director::class);
         $directors = $repository->findAll();
         return $this->render('director/index.html.twig', [
             'directors' => $directors,

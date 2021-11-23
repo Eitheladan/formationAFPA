@@ -1,10 +1,6 @@
 {% extends 'base.html.twig' %}
-
-{% block title %}Liste film
-{% endblock %}
-
+{% block title %}Liste film{% endblock %}
 {% block body %}
-
 	<style>
 		.flexbox-container {
 			display: -ms-flex;
@@ -26,6 +22,7 @@
 
 		.description {
 			border: 1px solid black;
+			width : 350px;
 		}
 	</style>
 	<h1 class="border border-dark rounded p-2 m-2 text-white bg-primary">
@@ -33,19 +30,15 @@
 			Films
 		{% endblock %}
 	</h1>
-
 	<center>
 		<div class="flexbox-container">
 			{% for film in films %}
 				<div>
-					<img style="width:100px;" src="{{ asset(film.affiche) }}"><br>
+					<img style="width:200px;" src="{{ asset(film.affiche) }}"><br>
 					<h1>{{ film.titre }}</h1><br>
 					<p class="description">{{ film.description }}</p><br>
-					<h5>
-						Durée :{{ film.duree }}</h5>
-					<p>Date :
-						{{ film.date | date('d/m/Y')}}</p>
-
+					<h5>Durée :{{ film.duree }}</h5>
+					<p>Date :{{ film.date | date('d/m/Y')}}</p>
 				</div>
 			{% endfor %}
 		</div>

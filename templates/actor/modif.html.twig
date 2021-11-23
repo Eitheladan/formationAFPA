@@ -6,7 +6,9 @@
 
 {% block body %}
 	<h1 class="border border-dark rounded p-2 m-2 text-white bg-primary">
+
 		Acteurs
+
 	</h1>
 	<style>
 		.flexbox-container {
@@ -27,15 +29,15 @@
 			padding: 10px;
 		}
 	</style>
+
 	<center>
-		<div class="flexbox-container">
-			{% for actor in actors %}
+		<div class="flexbox-container">			
 				<div>
-					<a href="{{ path('modif_actor', {'id' : actor.id}) }}"><img style="width:100px;" src="{{ asset(actor.image) }}"><br></a>
+					<img style="width:100px;" src="{{ asset(actor.image) }}"><br>
 					<h3>{{ actor.prenom }}
 						{{ actor.nom }}</h3><br>
-				</div>
-			{% endfor %}
+				</div>			
 		</div>
 	</center>
 {% endblock %}
+
