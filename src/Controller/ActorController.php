@@ -3,15 +3,20 @@
 namespace App\Controller;
 
 use App\Entity\Actor;
+use App\Form\ActorType;
 use App\Repository\ActorRepository;
+use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\Persistence\ObjectManager;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 class ActorController extends AbstractController
 {
     /**
-     * @Route("/actor", name="actor")
+     * @Route("/actors", name="actors")
      */
     public function index(ActorRepository $repository): Response
     {
@@ -21,13 +26,42 @@ class ActorController extends AbstractController
             'actors' => $actors,
         ]);
     }
+
+    public function create(Request $request, ObjectManager $manager)
+    {
+        $actor = new Actor();
+    }
     /**
-     * @route ("/actor/{id}", name="modif_actor")
+     * @route ("/actor/{id}", name="affiche_acteur")
      */
-    public function modif(ActorRepository $repository, Actor $id){
-        $actor = $repository->find($id);
-        return $this->render('actor/modif.html.twig', [
+    public function afficheActeur(Actor $actor): Response
+    {
+        // $actor = $repository->find($id);
+        return $this->render('actor/afficheActeur.html.twig', [
             'actor' => $actor,
         ]);
+    }
+
+
+    /**
+     * @route ("/createactor", name="create_acteur")
+     * @route ("/modifactor/{id}", name="modif_acteur")
+     */
+    public function modifActeur (Actor $actor=null ,Request $request, EntityManagerInterface $entity): Response
+    {
+        if($actor==null){
+            $actor = new Actor();
+            // print_r ($actor); die();
+        }
+        
+        $form = $this->createForm(ActorType::class, $actor);
+        $form->handleRequest($request);
+        if($form->isSubmitted())
+        {
+            $entity->persist($actor);
+            $entity->flush($actor);
+            return $this->redirectToRoute('actors');
+        }     
+        return $this->render('actor/modifActeur.html.twig', ['actor' => $actor, 'form' => $form->createView()]);
     }
 }

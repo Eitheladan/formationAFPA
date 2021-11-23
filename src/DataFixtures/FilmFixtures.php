@@ -62,7 +62,7 @@ class FilmFixtures extends Fixture
             ->setDate(new \DateTime("1995-10-04"))
             ->setAffiche("https://fr.web.img2.acsta.net/c_310_420/medias/nmedia/18/73/51/89/19209164.jpg");
 
-        $manager->persist($f4);
+        $manager->persist($f5);
 
         $manager->flush();
     }

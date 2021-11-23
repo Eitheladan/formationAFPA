@@ -11,7 +11,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class DirectorController extends AbstractController
 {
     /**
-     * @Route("/director", name="director")
+     * @Route("/director", name="directors")
      */
     public function index(DirectorRepository $repository): Response
     {

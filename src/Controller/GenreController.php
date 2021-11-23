@@ -10,7 +10,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class GenreController extends AbstractController
 {
     /**
-     * @Route("/genre", name="genre")
+     * @Route("/genre", name="genres")
      */
     public function index(): Response
     {
