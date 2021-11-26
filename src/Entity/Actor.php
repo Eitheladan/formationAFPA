@@ -36,7 +36,7 @@ class Actor
     private $image;   
 
     /**
-     * @ORM\ManyToMany(targetEntity=Film::class, mappedBy="Actor")
+     * @ORM\ManyToMany(targetEntity=Film::class)
      */
     private $films;
 

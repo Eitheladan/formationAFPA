@@ -36,7 +36,7 @@
 				<p>
 					{% for film in director.films %}
 						<div>
-							<div><img style="width:50px;" src="{{ film.image }}"></div>
+							<div><img style="width:50px;" src="{{ asset('images/films/' ~ film.image) }}"></div>
 							<p>{{film.titre}}</p>
 						</div>
 					{% endfor %}

@@ -25,7 +25,7 @@ class FilmType extends AbstractType
             ->add('titre', TextType::class)
             ->add('description', TextareaType::class)
             ->add('duree', TextType::class)
-            ->add('date', DateType::class)            
+            ->add('date', DateType::class, ['years' => range(1900, 2038)])            
             
             ->add('acteurs', EntityType::class,[
                 'mapped' => true,
