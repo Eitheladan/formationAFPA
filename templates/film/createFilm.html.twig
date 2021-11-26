@@ -1,0 +1,15 @@
+{% extends 'base.html.twig' %}
+{% block title %}Creation film
+{% endblock %}
+{% block body %}
+
+{{ form_start(form) }}
+
+ {{form_widget(form)}}
+
+<input type="submit" value="Création">
+{{ form_end(form) }}
+
+
+{% endblock %}
+

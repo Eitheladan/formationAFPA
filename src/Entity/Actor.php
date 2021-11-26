@@ -7,6 +7,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
+
 /**
  * @ORM\Entity(repositoryClass=ActorRepository::class)
  */
@@ -32,16 +33,17 @@ class Actor
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      */
-    private $image;
+    private $image;   
 
     /**
-     * @ORM\ManyToMany(targetEntity=Film::class, mappedBy="actor")
+     * @ORM\ManyToMany(targetEntity=Film::class, mappedBy="Actor")
      */
-    private $films_id;
+    private $films;
 
     public function __construct()
     {
         $this->films_id = new ArrayCollection();
+        $this->films = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -83,30 +85,30 @@ class Actor
         $this->image = $image;
 
         return $this;
-    }
+    } 
 
     /**
      * @return Collection|Film[]
      */
-    public function getFilmsId(): Collection
+    public function getFilms(): Collection
     {
-        return $this->films_id;
+        return $this->films;
     }
 
-    public function addFilmsId(Film $filmsId): self
+    public function addFilm(Film $film): self
     {
-        if (!$this->films_id->contains($filmsId)) {
-            $this->films_id[] = $filmsId;
-            $filmsId->addActor($this);
+        if (!$this->films->contains($film)) {
+            $this->films[] = $film;
+            $film->addActeur($this);
         }
 
         return $this;
     }
 
-    public function removeFilmsId(Film $filmsId): self
+    public function removeFilm(Film $film): self
     {
-        if ($this->films_id->removeElement($filmsId)) {
-            $filmsId->removeActor($this);
+        if ($this->films->removeElement($film)) {
+            $film->removeActeur($this);
         }
 
         return $this;

@@ -26,17 +26,12 @@ class ActorController extends AbstractController
             'actors' => $actors,
         ]);
     }
-
-    public function create(Request $request, ObjectManager $manager)
-    {
-        $actor = new Actor();
-    }
+        
     /**
      * @route ("/actor/{id}", name="affiche_acteur")
      */
     public function afficheActeur(Actor $actor): Response
     {
-        // $actor = $repository->find($id);
         return $this->render('actor/afficheActeur.html.twig', [
             'actor' => $actor,
         ]);

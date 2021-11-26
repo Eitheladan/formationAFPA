@@ -7,7 +7,7 @@
 {% block body %}
 	<h1 class="border border-dark rounded p-2 m-2 text-white bg-primary">
 
-		Acteurs
+		Directeur
 
 	</h1>
 	<style>
@@ -33,15 +33,15 @@
 	<center>
 		<div class="flexbox-container">			
 				<div>
-					<img style="width:100px;" src="{{actor.image}}"><br>
-					<h3>{{ actor.prenom }}
-						{{ actor.nom }}</h3><br>
+					<img style="width:100px;" src="{{director.image}}"><br>
+					<h3>{{ director.prenom }}
+						{{ director.nom }}</h3><br>
 				</div>			
 		</div>
 {{ form_start(form) }}
 
 {# {{form_widget(form)}} #}
-<div>{{ form_row(form.nom, {"attr" : {'class':'text-dark bg-success'},"label":"Nom : "})}}</div>
+<div>{{ form_row(form.Nom, {"attr" : {'class':'text-dark bg-success'},"label":"Nom : "})}}</div>
 <div>{{ form_row(form.prenom, {"attr" : {'class':'text-dark bg-success'},"label":"Prénom : "})}}</div>
 <div>{{ form_row(form.image, {"attr" : {'class':'text-dark bg-success'},"label":"Image : "})}}</div>
 <input type="submit" value="enregistrer">

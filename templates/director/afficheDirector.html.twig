@@ -1,12 +1,12 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Liste des acteurs
+{% block title %}Réalisateur
 {% endblock %}
 
 
 {% block body %}
 	<h1 class="border border-dark rounded p-2 m-2 text-white bg-primary">
-		{{ actor.prenom }} - {{ actor.nom }}
+		{{ director.prenom }} - {{ director.nom }}
 	</h1>
 	<style>
 		.flexbox-container {
@@ -30,13 +30,13 @@
 
 	<center>
 			<div>
-				<img style="width:100px;" src="{{ actor.image }}"><br>
+				<img style="width:100px;" src="{{ director.image }}"><br>
 			</div>
 			<div class="flexbox-container">				
 				<p>
-					{% for film in actor.films %}
+					{% for film in director.films %}
 						<div>
-							<div><img style="width:50px;" src="{{ asset('images/films/' ~ film.image) }}"></div>
+							<div><img style="width:50px;" src="{{ film.image }}"></div>
 							<p>{{film.titre}}</p>
 						</div>
 					{% endfor %}

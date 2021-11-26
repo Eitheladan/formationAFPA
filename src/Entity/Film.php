@@ -6,9 +6,12 @@ use App\Repository\FilmRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\HttpFoundation\File\File;
+use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 /**
  * @ORM\Entity(repositoryClass=FilmRepository::class)
+ *  @Vich\Uploadable
  */
 class Film
 {
@@ -38,33 +41,75 @@ class Film
      * @ORM\Column(type="date")
      */
     private $date;
+    
+    /**
+     * @ORM\ManyToMany(targetEntity=Actor::class, inversedBy="films")
+     */
+    private $acteurs;
 
     /**
-     * @ORM\Column(type="string", length=510, nullable=true)
+     * @ORM\ManyToOne(targetEntity=Director::class, inversedBy="films")
      */
-    private $affiche;
+    private $director;
 
-    // /**
-    //  * @ORM\ManyToOne(targetEntity=genre::class)
-    //  * @ORM\JoinColumn(nullable=true)
-    //  */
-    // private $genre;
+    /**
+     * @ORM\ManyToOne(targetEntity=Genre::class, inversedBy="films")
+     */
+    private $genre;
 
-    // /**
-    //  * @ORM\ManyToOne(targetEntity=director::class)
-    //  * @ORM\JoinColumn(nullable=true)
-    //  */
-    // private $director;
+    /**
+     * @ORM\Column(type="string", length=255)
+     * @var string
+     */
+    private $image;
 
-    // /**
-    //  * @ORM\ManyToMany(targetEntity=actor::class, inversedBy="films_id")
-    //  */
-    // private $actor;
+    /**
+     * @Vich\UploadableField(mapping="film_images", fileNameProperty="image")
+     * @var File
+     */
+    private $imageFile;
+
+    /**
+     * @ORM\Column(type="datetime")
+     * @var \DateTime
+     */
+    private $updatedAt;   
 
     public function __construct()
     {
         $this->actor = new ArrayCollection();
+        $this->acteurs = new ArrayCollection();
+        $this->updatedAt = new \Datetime();
     }
+
+    public function setImageFile(File $image = null)
+    {
+        $this->imageFile = $image;
+
+        // VERY IMPORTANT:
+        // It is required that at least one field changes if you are using Doctrine,
+        // otherwise the event listeners won't be called and the file is lost
+        if ($image) {
+            // if 'updatedAt' is not defined in your entity, use another property
+            $this->updatedAt = new \DateTime('now');
+        }
+    }
+
+    public function getImageFile()
+    {
+        return $this->imageFile;
+    }
+
+    public function setImage($image)
+    {
+        $this->image = $image;
+    }
+
+    public function getImage()
+    {
+        return $this->image;
+    }
+
 
     public function getId(): ?int
     {
@@ -117,65 +162,53 @@ class Film
         $this->date = $date;
 
         return $this;
+    }    
+
+    /**
+     * @return Collection|Actor[]
+     */
+    public function getActeurs(): Collection
+    {
+        return $this->acteurs;
     }
 
-    public function getAffiche(): ?string
+    public function addActeur(Actor $acteur): self
     {
-        return $this->affiche;
-    }
-
-    public function setAffiche(?string $affiche): self
-    {
-        $this->affiche = $affiche;
+        if (!$this->acteurs->contains($acteur)) {
+            $this->acteurs[] = $acteur;
+        }
 
         return $this;
     }
 
-    // public function getGenre(): ?genre
-    // {
-    //     return $this->genre;
-    // }
+    public function removeActeur(Actor $acteur): self
+    {
+        $this->acteurs->removeElement($acteur);
 
-    // public function setGenre(?genre $genre): self
-    // {
-    //     $this->genre = $genre;
+        return $this;
+    }
 
-    //     return $this;
-    // }
+    public function getDirector(): ?Director
+    {
+        return $this->director;
+    }
 
-    // public function getDirector(): ?director
-    // {
-    //     return $this->director;
-    // }
+    public function setDirector(?Director $director): self
+    {
+        $this->director = $director;
 
-    // public function setDirector(?director $director): self
-    // {
-    //     $this->director = $director;
+        return $this;
+    }
 
-    //     return $this;
-    // }
+    public function getGenre(): ?Genre
+    {
+        return $this->genre;
+    }
 
-    // /**
-    //  * @return Collection|actor[]
-    //  */
-    // public function getActor(): Collection
-    // {
-    //     return $this->actor;
-    // }
+    public function setGenre(?Genre $genre): self
+    {
+        $this->genre = $genre;
 
-    // public function addActor(actor $actor): self
-    // {
-    //     if (!$this->actor->contains($actor)) {
-    //         $this->actor[] = $actor;
-    //     }
-
-    //     return $this;
-    // }
-
-    // public function removeActor(actor $actor): self
-    // {
-    //     $this->actor->removeElement($actor);
-
-    //     return $this;
-    // }
+        return $this;
+    }    
 }

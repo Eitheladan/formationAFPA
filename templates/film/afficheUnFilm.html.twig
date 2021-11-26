@@ -1,0 +1,52 @@
+{% extends 'base.html.twig' %}
+{% block title %}Liste film
+{% endblock %}
+{% block body %}
+	<style>
+		.flexbox-container {
+			display: -ms-flex;
+			display: -webkit-flex;
+			display: flex;
+			flex-wrap: wrap;
+			flex-direction: row;
+			justify-content: flex-start;
+			align-items: stretch;
+			width: 50%;
+		}
+
+		.flexbox-container > div {
+			width: 50%;
+			margin: 0 10px;
+			flex: 1;
+			padding: 10px;
+		}
+
+		.description {
+			border: 1px solid black;
+			width: 350px;
+		}
+	</style>
+	<h1 class="border border-dark rounded p-2 m-2 text-white bg-primary">{% block monTitre %}{{ film.titre }}{% endblock %}</h1>
+	<center>
+		<div class="flexbox-container">
+			<div>					
+				<img src="{{ asset('images/films/' ~ film.image) }}" class="d-block user-select-none" width="25%" aria-label="Placeholder: Image cap" focusable="false" role="img" preserveaspectratio="xMidYMid slice" viewbox="0 0 318 180" style="font-size:1.125rem;text-anchor:middle">
+						<rect width="100%" height="100%" fill="#868e96"></rect>
+						<text x="50%" y="50%" fill="#dee2e6" dy=".3em"></text>
+				</svg>
+
+				<br>
+				<h5>Genre :	{{ film.genre.nom }}</h5>					
+				<p class="description">{{ film.description }}</p><br>
+				<h5>Durée :{{ film.duree }}</h5>
+				<p>Date :{{ film.date | date('d/m/Y')}}</p>
+				<p>Directeur : <img src="{{film.director.image}}" style="width: 15px;">{{film.director.prenom}}	- {{film.director.nom}}</p>
+				<p>Acteurs :
+					{% for actor in film.acteurs %}
+						<p><img src="{{actor.image}}" style="width: 15px;">	{{actor.prenom}} -	{{actor.nom}}</p>
+					{% endfor %}
+				</p>
+			</div>
+		</div>
+	</center>
+{% endblock %}
